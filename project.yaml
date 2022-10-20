@@ -59,5 +59,5 @@ actions:
         measure_csv6: output/measures/measure_incidence*_rate.csv
         measure_csv7: output/measures/measure_incidencebyRegion*_rate.csv
         measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
-        measure_csv9: output/measures/measure_incidenceyEthnicity*_rate.csv
+        measure_csv9: output/measures/measure_incidencebyEthnicity*_rate.csv
         measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
