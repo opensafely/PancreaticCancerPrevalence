@@ -9,3 +9,8 @@ venv/
 .DS_Store
 .Rhistory
 .Rproj.user/
+/r_scripts/*
+/output_requests_releases/*
+/analysis/plots.R
+*.Rmd
+*.pdf
