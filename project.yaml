@@ -61,24 +61,3 @@ actions:
         measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
         measure_csv9: output/measures/measure_incidenceyEthnicity*_rate.csv
         measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
-
-  # describe_trends:
-  #   run: r:latest analysis/Descriptive_trends.R
-  #   needs: 
-  #     [
-  #       generate_measures,
-  #     ]
-  #   outputs:
-  #     moderately_sensitive:
-  #       Fig1: output/ADTinj_count1.png
-  #       Fig2: output/ADTinj_rates1.png
-  #       Fig3: output/ADTinjbyRegion1.png
-  #       Fig4: output/ADTinjbyIMD1.png
-  #       Fig5: output/ADTinjbyEthnicity1.png
-  #       Fig6: output/ADTinjbyAge1.png
-  #       Fig7: output/ADToral_count1.png
-  #       Fig8: output/ADToral_rates1.png
-  #       Fig9: output/ADToralbyRegion1.png
-  #       Fig10: output/ADToralbyIMD1.png
-  #       Fig11: output/ADToralbyEthnicity1.png
-  #       Fig12: output/ADToralbyAge1.png
