@@ -29,17 +29,17 @@ actions:
       highly_sensitive:
         cohort: output/measures/inp*.feather
 
-  # join_ethnicity:
-  #   run: python:latest python analysis/join_ethnicity.py
-  #   needs:
-  #     [
-  #       generate_rates_1,
-  #       generate_rates_2,
-  #       generate_ethnicity,
-  #     ]
-  #   outputs:
-  #     highly_sensitive:
-  #       cohort: output/measures/in*.feather
+  join_ethnicity:
+    run: python:latest python analysis/join_ethnicity.py
+    needs:
+      [
+        generate_rates_1,
+        generate_rates_2,
+        generate_ethnicity,
+      ]
+    outputs:
+      highly_sensitive:
+        cohort: output/measures/in*.feather
   
   # generate_measures:
   #   run: cohortextractor:latest generate_measures --study-definition study_definition_rates --skip-existing --output-dir=output/measures
