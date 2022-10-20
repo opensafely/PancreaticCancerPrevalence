@@ -11,11 +11,11 @@ actions:
       highly_sensitive:
         cohort: output/input_ethnicity.feather
 
-  # generate_study_population:
-  #   run: cohortextractor:latest generate_cohort --study-definition study_definition
-  #   outputs:
-  #     highly_sensitive:
-  #       cohort: output/input.csv
+  generate_study_population:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition
+    outputs:
+      highly_sensitive:
+        cohort: output/input.csv
 
   # generate_rates_1:    
   #   run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2018-01-01 to 2018-08-01 by month" --skip-existing --output-dir=output --output-format=feather
