@@ -1,3 +1,16 @@
 {
-  "files": {}
+  "files": {
+    "opensafely-ethnicity.csv": {
+      "id": "opensafely/ethnicity/2020-04-27",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/ethnicity/2020-04-27/",
+      "downloaded_at": "2022-10-20 11:16:21.180762Z",
+      "sha": "3d2f3998b71863a80b24d60f6f4282e14191ae13"
+    },
+    "user-agleman-prostate_cancer_snomed.csv": {
+      "id": "user/agleman/prostate_cancer_snomed/051ac36b",
+      "url": "https://codelists.opensafely.org/codelist/user/agleman/prostate_cancer_snomed/051ac36b/",
+      "downloaded_at": "2022-10-20 11:16:21.454560Z",
+      "sha": "e34c03a84feae9b9748a4b88626cbfaa6374cb18"
+    }
+  }
 }
