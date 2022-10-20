@@ -29,35 +29,35 @@ actions:
       highly_sensitive:
         cohort: output/measures/inp*.feather
 
-  join_ethnicity:
-    run: python:latest python analysis/join_ethnicity.py
-    needs:
-      [
-        generate_rates_1,
-        generate_rates_2,
-        generate_ethnicity,
-      ]
-    outputs:
-      highly_sensitive:
-        cohort: output/measures/in*.feather
+  # join_ethnicity:
+  #   run: python:latest python analysis/join_ethnicity.py
+  #   needs:
+  #     [
+  #       generate_rates_1,
+  #       generate_rates_2,
+  #       generate_ethnicity,
+  #     ]
+  #   outputs:
+  #     highly_sensitive:
+  #       cohort: output/measures/in*.feather
   
-  generate_measures:
-    run: cohortextractor:latest generate_measures --study-definition study_definition_rates --skip-existing --output-dir=output/measures
-    needs: 
-      [
-        generate_rates_1,
-        generate_rates_2,
-        join_ethnicity,
-      ]
-    outputs:
-      moderately_sensitive:
-        measure_csv1: output/measures/measure_prevalence*_rate.csv
-        measure_csv2: output/measures/measure_prevalencebyRegion*_rate.csv
-        measure_csv3: output/measures/measure_prevalencebyIMD*_rate.csv
-        measure_csv4: output/measures/measure_prevalencebyEthnicity*_rate.csv
-        measure_csv5: output/measures/measure_prevalencebyAge*_rate.csv
-        measure_csv6: output/measures/measure_incidence*_rate.csv
-        measure_csv7: output/measures/measure_incidencebyRegion*_rate.csv
-        measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
-        measure_csv9: output/measures/measure_incidenceyEthnicity*_rate.csv
-        measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
+  # generate_measures:
+  #   run: cohortextractor:latest generate_measures --study-definition study_definition_rates --skip-existing --output-dir=output/measures
+  #   needs: 
+  #     [
+  #       generate_rates_1,
+  #       generate_rates_2,
+  #       join_ethnicity,
+  #     ]
+  #   outputs:
+  #     moderately_sensitive:
+  #       measure_csv1: output/measures/measure_prevalence*_rate.csv
+  #       measure_csv2: output/measures/measure_prevalencebyRegion*_rate.csv
+  #       measure_csv3: output/measures/measure_prevalencebyIMD*_rate.csv
+  #       measure_csv4: output/measures/measure_prevalencebyEthnicity*_rate.csv
+  #       measure_csv5: output/measures/measure_prevalencebyAge*_rate.csv
+  #       measure_csv6: output/measures/measure_incidence*_rate.csv
+  #       measure_csv7: output/measures/measure_incidencebyRegion*_rate.csv
+  #       measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
+  #       measure_csv9: output/measures/measure_incidenceyEthnicity*_rate.csv
+  #       measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
