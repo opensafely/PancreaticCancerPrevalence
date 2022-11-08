@@ -61,3 +61,4 @@ actions:
         measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
         measure_csv9: output/measures/measure_incidencebyEthnicity*_rate.csv
         measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
+        measure_csv11: output/measures/measure_mortality*_rate.csv

@@ -12,7 +12,7 @@ study = StudyDefinition(
         "rate": "uniform",
         "incidence": 0.5,
         },
-    index_date="2015-01-01", # for measures
+    index_date="2015-01-01",
     population=patients.satisfying(
         """
         registered
@@ -21,24 +21,24 @@ study = StudyDefinition(
         """
     ),
     registered=patients.registered_as_of(
-        "index_date",
+        "last_day_of_month(index_date)",
         return_expectations={"incidence":0.95}
     ),
     has_died=patients.died_from_any_cause(
-        on_or_before="index_date",
+        on_or_before="first_day_of_month(index_date) - 1 day",# has not died in the previous month and so no clash with the *died_prostate* variable 
         returning="binary_flag",
     ),
     age=patients.age_as_of(
-        "index_date",
+        "last_day_of_month(index_date)",
         return_expectations={
             "rate": "exponential_increase",
             "int": {"distribution": "population_ages"},
         },
     ),
-    ### prevalence, diagnosed any time, registered, alive and an adult in a given month
+    ### prevalence that month: diagnosed any time up to the date, registered, alive and an adult in a given month
     prevalence=patients.with_these_clinical_events(
         prostate_cancer_codes,
-        on_or_before="last_day_of_month(index_date)", #do I need the last day? for measures?
+        on_or_before="last_day_of_month(index_date)",
         find_first_match_in_period=True,
         include_date_of_match=True,
         include_month=True,
@@ -50,7 +50,7 @@ study = StudyDefinition(
         }
     ),
 
-    ### age at diagnosis
+### age at diagnosis
     age_pa_ca=patients.age_as_of(
         "prevalence_date",
         return_expectations={
@@ -58,35 +58,65 @@ study = StudyDefinition(
             "int": {"distribution": "population_ages"},
         },
     ),
-
-    ### incidence, diagnosed that month
-    ###
-    # this is not corrrect because the desease could be diagnosed earlier, codes are entered multiple times to patinet record
-    ###
-    incid=patients.with_these_clinical_events(
-        prostate_cancer_codes,
-        between=[
-            "first_day_of_month(index_date)", #diagnosed this month, will this work for measures?
-            "last_day_of_month(index_date)",
-        ],
-        find_first_match_in_period=True,
-        include_date_of_match=True,
-        include_month=True,
-        include_day=True,
-        returning="binary_flag",
-        return_expectations={
-            "date": {"earliest": "2015-01-01", "latest": "today"},
-            "incidence": 0.4
-        }
-    ),
+### incidence, NEW diagnosed that month
+    # incid=patients.with_these_clinical_events(
+    #     prostate_cancer_codes,
+    #     between=[
+    #         "first_day_of_month(index_date)", #diagnosed this month, will this work for measures?
+    #         "last_day_of_month(index_date)",
+    #     ],
+    #     find_first_match_in_period=True,
+    #     include_date_of_match=True,
+    #     include_month=True,
+    #     include_day=True,
+    #     returning="binary_flag",
+    #     return_expectations={
+    #         "date": {"earliest": "2015-01-01", "latest": "today"},
+    #         "incidence": 0.4
+    #     }
+    # ),
+    # incidence=patients.satisfying(
+    #     """
+    #     incid
+    #     AND incid_date = prevalence_date
+    #     """
+    # ),## this would work
+### or otherwise this
+# https://github.com/opensafely/antidepressant-prescribing-lda/blob/e50bd7479bf87c10947b0a1aec9b30b2f7518924/analysis/study_definition.py#L111-L122    
     incidence=patients.satisfying(
         """
-        incid
-        AND incid_date = prevalence_date
-        """
-    ),## will this let me establish incidence? 
-
-    ### demographics: sex, ethnicity, IMD, and region
+        diagnosis AND
+        NOT previous
+        """,
+        diagnosis=patients.with_these_clinical_events(
+            prostate_cancer_codes,
+            returning="binary_flag",
+            find_last_match_in_period=True,
+            between=[
+                "first_day_of_month(index_date)",
+                "last_day_of_month(index_date)",
+            ],
+            return_expectations={"incidence": 0.5}
+        ),
+        previous=patients.with_these_clinical_events(
+            codelist=prostate_cancer_codes,
+            returning="binary_flag",
+            find_last_match_in_period=True,
+            on_or_before="index_date - 1 month",
+            return_expectations={"incidence": 0.1},
+        ),
+        return_expectations={"incidence": 0.4},
+    ),
+    died_prostate=patients.with_these_codes_on_death_certificate(
+        prostate_cancer_ICD10,
+        between=[
+            "first_day_of_month(index_date)",
+            "last_day_of_month(index_date)",# ***Caution*** this may casue clash with the population definition
+        ],
+        match_only_underlying_cause=False,
+        return_expectations={"incidence": 0.20},
+    ),
+### demographics: sex, ethnicity, IMD, and region
     age_group=patients.categorised_as(
         {
             "<65": "DEFAULT",
@@ -113,7 +143,7 @@ study = StudyDefinition(
         }
     ),
     region=patients.registered_practice_as_of(
-        "index_date",
+        "last_day_of_month(index_date)",
         returning="nuts1_region_name",
         return_expectations={
             "rate": "universal",
@@ -141,7 +171,7 @@ study = StudyDefinition(
             "IMD_5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844""",
         },
         index_of_multiple_deprivation=patients.address_as_of(
-            "index_date",
+            "last_day_of_month(index_date)",
             returning="index_of_multiple_deprivation",
             round_to_nearest=100,
         ),
@@ -197,7 +227,7 @@ measures = [
         group_by="age_group",
         small_number_suppression=True,
     ),
-        Measure(
+    Measure(
         id="incidence_rate",
         numerator="incidence",
         denominator="population",
@@ -230,6 +260,13 @@ measures = [
         numerator="incidence",
         denominator="population",
         group_by="age_group",
+        small_number_suppression=True,
+    ),
+    Measure(
+        id="mortality_rate",
+        numerator="died_prostate",
+        denominator="prevalence",
+        group_by="population",
         small_number_suppression=True,
     ),
 ]
