@@ -38,7 +38,7 @@ study = StudyDefinition(
     ### prevalence, diagnosed any time, registered, alive and an adult in a given month
     prevalence=patients.with_these_clinical_events(
         prostate_cancer_codes,
-        on_or_before="index_date",
+        on_or_before="last_day_of_month(index_date)", #do I need the last day? for measures?
         find_first_match_in_period=True,
         include_date_of_match=True,
         include_month=True,
@@ -60,14 +60,13 @@ study = StudyDefinition(
     ),
 
     ### incidence, diagnosed that month
-###
-# this is not corrrect because the desease could be diagnosed earlier, codes are entered multiple times to patinet record
-###
-
-    incidence=patients.with_these_clinical_events(
+    ###
+    # this is not corrrect because the desease could be diagnosed earlier, codes are entered multiple times to patinet record
+    ###
+    incid=patients.with_these_clinical_events(
         prostate_cancer_codes,
         between=[
-            "first_day_of_month(index_date)",
+            "first_day_of_month(index_date)", #diagnosed this month, will this work for measures?
             "last_day_of_month(index_date)",
         ],
         find_first_match_in_period=True,
@@ -80,6 +79,13 @@ study = StudyDefinition(
             "incidence": 0.4
         }
     ),
+    incidence=patients.satisfying(
+        """
+        incid
+        AND incid_date = prevalence_date
+        """
+    ),## will this let me establish incidence? 
+
     ### demographics: sex, ethnicity, IMD, and region
     age_group=patients.categorised_as(
         {
