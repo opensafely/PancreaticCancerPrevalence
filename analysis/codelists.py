@@ -20,3 +20,8 @@ prostate_cancer_codes = codelist_from_csv(
     column="code",
 )
 
+# prostate_cancer_ICD10
+# C61 C68.0 C79.8 D40.0
+prostate_cancer_ICD10 = codelist(["C61", "C68.0", "C79.8", "D40.0"], 
+system ="icd10")
+
