@@ -102,7 +102,7 @@ study = StudyDefinition(
             codelist=prostate_cancer_codes,
             returning="binary_flag",
             find_last_match_in_period=True,
-            on_or_before="index_date - 1 month",
+            on_or_before="index_date - 1 day",
             return_expectations={"incidence": 0.1},
         ),
         return_expectations={"incidence": 0.4},
@@ -111,8 +111,8 @@ study = StudyDefinition(
         prostate_cancer_ICD10,
         between=[
             "first_day_of_month(index_date)",
-            "last_day_of_month(index_date)",# ***Caution*** this may casue clash with the population definition
-        ],
+            "last_day_of_month(index_date)",
+            ],
         match_only_underlying_cause=False,
         return_expectations={"incidence": 0.20},
     ),
