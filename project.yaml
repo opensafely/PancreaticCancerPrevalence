@@ -82,3 +82,14 @@ actions:
         Fig9: output/prevalenc_by_ethnicity.png
         Fig10: output/prevalenc_by_imd_cat.png
         Fig11: output/prevalenc_by_region.png
+        csv1: output/Rates_rounded_prevalence.csv
+        csv2: output/Rates_rounded_prevalence_by_region.csv
+        csv3: output/Rates_rounded_prevalence_by_imd_cat.csv
+        csv4: output/Rates_rounded_prevalence_by_ethnicity.csv
+        csv5: output/Rates_rounded_prevalence_by_age_group.csv
+        csv6: output/Rates_rounded_incidence.csv
+        csv7: output/Rates_rounded_incidence_by_region.csv
+        csv8: output/Rates_rounded_incidence_by_imd_cat.csv
+        csv9: output/Rates_rounded_incidence_by_ethnicity.csv
+        csv10: output/Rates_rounded_incidence_by_age_group.csv
+        csv11: output/Rates_rounded_died_prostate.csv
