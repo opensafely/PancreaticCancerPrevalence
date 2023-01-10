@@ -36,6 +36,7 @@ for (i in c("measure_incidence_rate.csv",
   
   Rates <- read_csv(here::here("output", "measures", i))
   Rates <- as.data.frame(Rates)
+  Rates$value2 <- Rates$value*100000
   ###
   # Redact and round counts 
   ###
@@ -45,18 +46,18 @@ for (i in c("measure_incidence_rate.csv",
 ###
 # Plot count ADT injectables 
 ###
-p <- ggplot(data = Rates,aes(date, value)) +
+p <- ggplot(data = Rates,aes(date, value2)) +
   geom_line()+
   geom_point()+
   scale_x_date(date_breaks = "2 month",
                date_labels = "%Y-%m")+
   labs(title = paste0(colnames(Rates)[1]), 
-       x = "", y = "Rate per 1000")+
+       x = "", y = "Rate per 100,000")+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
-p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(Rates$value)+(sd(Rates$value)*2)), 
+p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(Rates$value2)+(sd(Rates$value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
 p <- p + labs(caption="OpenSafely-TPP December 2022")
 p <- p + theme(plot.caption = element_text(size=8))
@@ -75,6 +76,7 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   
   Rates <- read_csv(here::here("output", "measures", i))
   Rates <- as.data.frame(Rates)
+  Rates$value2 <- Rates$value*100000
   ###
   # Redact and round counts 
   ###
@@ -85,18 +87,18 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   # Plot count ADT injectables 
   ###
 
-p <- ggplot(data = Rates,aes(date, value, color = Rates[,1], lty = Rates[,1])) +
+p <- ggplot(data = Rates,aes(date, value2, color = Rates[,1], lty = Rates[,1])) +
   geom_line()+
   #geom_point(color = "region")+
   scale_x_date(date_breaks = "2 month",
                date_labels = "%Y-%m")+
   labs(title = paste0(substr(i, 9, 17),"_by_",colnames(Rates)[1]), 
-       x = "", y = "Rate per 1000")+
+       x = "", y = "Rate per 100,000")+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position="bottom")
 
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
-p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(Rates$value)+(sd(Rates$value)*2)), 
+p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(Rates$value2)+(sd(Rates$value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
 p <- p + labs(caption="OpenSafely-TPP December 2022")
 p <- p + theme(plot.caption = element_text(size=8))
