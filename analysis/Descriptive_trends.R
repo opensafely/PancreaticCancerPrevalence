@@ -54,7 +54,7 @@ for (i in c("measure_incidence_rate.csv",
   
 
 ###
-# Plot count ADT injectables 
+# Plot 
 ###
 p <- ggplot(data = Rates_rounded,aes(date, value2)) +
   geom_line()+
@@ -124,4 +124,29 @@ ggsave(
   filename=paste0(substr(i, 9, 17),"_by_",colnames(Rates_rounded)[1],".png"), path=here::here("output"),
 )
 }
+
+###
+# Summarise population data from the input.csv
+###
+
+#Input <- read_csv(here::here("output", "input.csv"),show_col_types = FALSE)
+Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
+
+Table1 <- as.data.frame(NA)
+xx <- c("total number","average age","sd age")
+Table1[xx] <- NA
+Table1[1,"total number"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
+Input2 <- Input[Input$prostate_ca==1,]
+
+Table1[1,"average age"] <- mean(Input2$age_pa_ca)
+Table1[1,"sd age"] <- sd(Input2$age_pa_ca)
+Table1[names(table(Input2$ethnicity))] <- NA
+Table1[1,names(table(Input2$ethnicity))] <- plyr::round_any(as.numeric(table(Input2$ethnicity)), 5, f = round)
+Table1[names(table(Input2$sex))] <- NA
+Table1[1,names(table(Input2$sex))] <- plyr::round_any(as.numeric(table(Input2$sex)), 5, f = round)
+
+write.table(Table1, here::here("output", "Table1.csv"),sep = ",",row.names = FALSE)
+
+
+
 

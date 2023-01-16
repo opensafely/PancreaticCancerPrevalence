@@ -18,13 +18,13 @@ actions:
         cohort: output/input.csv
 
   generate_rates_1:    
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2021-01-01 to 2021-08-01 by month" --skip-existing --output-dir=output --output-format=feather
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2015-01-01 to 2018-12-01 by month" --skip-existing --output-dir=output --output-format=feather
     outputs:      
       highly_sensitive:
         cohort: output/measures/inpu*.feather
   
   generate_rates_2:    
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2021-09-01 to 2022-10-01 by month" --skip-existing --output-dir=output --output-format=feather
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2019-01-01 to 2022-12-01 by month" --skip-existing --output-dir=output --output-format=feather
     outputs:      
       highly_sensitive:
         cohort: output/measures/inp*.feather
@@ -68,6 +68,7 @@ actions:
     needs: 
       [
         generate_measures,
+        generate_study_population
       ]
     outputs:
       moderately_sensitive:
@@ -93,3 +94,4 @@ actions:
         csv9: output/Rates_rounded_incidence_by_ethnicity.csv
         csv10: output/Rates_rounded_incidence_by_age_group.csv
         csv11: output/Rates_rounded_died_prostate.csv
+        csv12: output/Table1.csv

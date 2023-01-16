@@ -18,6 +18,7 @@ study = StudyDefinition(
         registered
         AND NOT has_died
         AND (age >=18 AND age <= 110)
+        AND (sex = "M")
         """
     ),
     registered=patients.registered_as_of(
@@ -29,13 +30,19 @@ study = StudyDefinition(
         returning="binary_flag",
     ),
     age=patients.age_as_of(
-        "last_day_of_month(index_date)",
+        "first_day_of_month(index_date)",
         return_expectations={
             "rate": "exponential_increase",
             "int": {"distribution": "population_ages"},
         },
     ),
-    ### prevalence that month: diagnosed any time up to the date, registered, alive and an adult in a given month
+    sex=patients.sex(
+        return_expectations={
+            "rate": "universal",
+            "category": {"ratios": {"M": 0.5, "F": 0.5}},
+        }
+    ),
+### prevalence that month: diagnosed any time up to the date, registered, alive and an adult in a given month
     prevalence=patients.with_these_clinical_events(
         prostate_cancer_codes,
         on_or_before="last_day_of_month(index_date)",
@@ -102,7 +109,7 @@ study = StudyDefinition(
             codelist=prostate_cancer_codes,
             returning="binary_flag",
             find_last_match_in_period=True,
-            on_or_before="index_date - 1 day",
+            on_or_before="first_day_of_month(index_date) - 1 day",
             return_expectations={"incidence": 0.1},
         ),
         return_expectations={"incidence": 0.4},
@@ -120,9 +127,9 @@ study = StudyDefinition(
     age_group=patients.categorised_as(
         {
             "<65": "DEFAULT",
-            "65-74": """ age_pa_ca >= 65 AND age_pa_ca < 75""",
-            "75-84": """ age_pa_ca >= 75 AND age_pa_ca < 85""",
-            "85+": """ age_pa_ca >=  85 AND age_pa_ca < 120""",
+            "65-74": """ age >= 65 AND age < 75""",
+            "75-84": """ age >= 75 AND age < 85""",
+            "85+": """ age >=  85 AND age < 120""",
         },
         return_expectations={
             "rate": "universal",
@@ -135,12 +142,6 @@ study = StudyDefinition(
                 }
             },
         },
-    ),
-    sex=patients.sex(
-        return_expectations={
-            "rate": "universal",
-            "category": {"ratios": {"M": 0.99, "F": 0.01}},
-        }
     ),
     region=patients.registered_practice_as_of(
         "last_day_of_month(index_date)",
@@ -265,7 +266,7 @@ measures = [
     Measure(
         id="mortality_rate",
         numerator="died_prostate",
-        denominator="prevalence",
+        denominator="population",
         group_by="population",
         small_number_suppression=True,
     ),

@@ -4,7 +4,7 @@ from codelists import *
 
 start_date = "2015-01-01"
 
-end_date = "2022-10-01"
+end_date = "2022-12-01"
 
 study = StudyDefinition(
     default_expectations={
@@ -88,7 +88,8 @@ study = StudyDefinition(
     ),
     age_group=patients.categorised_as(
         {
-            "<65": "DEFAULT",
+            "Missing": "DEFAULT",
+            "<65": """ age_pa_ca < 65""",
             "65-74": """ age_pa_ca >= 65 AND age_pa_ca < 75""",
             "75-84": """ age_pa_ca >= 75 AND age_pa_ca < 85""",
             "85+": """ age_pa_ca >=  85 AND age_pa_ca < 120""",
@@ -97,10 +98,11 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "<65": 0.25,
-                    "65-74": 0.25,
-                    "75-84": 0.25,
-                    "85+": 0.25,
+                    "Missing": 0.2,
+                    "<65": 0.2,
+                    "65-74": 0.2,
+                    "75-84": 0.2,
+                    "85+": 0.2,
                 }
             },
         },
@@ -141,7 +143,7 @@ study = StudyDefinition(
     ),
     imd_cat=patients.categorised_as(
         {
-            "0": "DEFAULT",
+            "Missing": "DEFAULT",
             "1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
             "2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
             "3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
@@ -157,7 +159,7 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "0": 0.05,
+                    "Missing": 0.05,
                     "1": 0.19,
                     "2": 0.19,
                     "3": 0.19,
