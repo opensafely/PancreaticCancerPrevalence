@@ -3,7 +3,6 @@ from cohortextractor import StudyDefinition, patients
 from codelists import *
 
 start_date = "2015-01-01"
-
 end_date = "2022-12-01"
 
 study = StudyDefinition(
@@ -20,7 +19,7 @@ study = StudyDefinition(
             "Missing": "DEFAULT",
             "White": """ ethnicity_code=1 """,
             "Mixed": """ ethnicity_code=2 """,
-            "South Asian": """ ethnicity_code=3 """,
+            "South_Asian": """ ethnicity_code=3 """,
             "Black": """ ethnicity_code=4 """,
             "Other": """ ethnicity_code=5 """,
         },
@@ -31,21 +30,20 @@ study = StudyDefinition(
                     "Missing": 0.4,
                     "White": 0.2,
                     "Mixed": 0.1,
-                    "South Asian": 0.1,
+                    "South_Asian": 0.1,
                     "Black": 0.1,
                     "Other": 0.1,
                 }
             },
         },
-
         ethnicity_code=patients.with_these_clinical_events(
             ethnicity_codes,
             returning="category",
             find_last_match_in_period=True,
             on_or_before="index_date",
             return_expectations={
-                "category": {"ratios": {"1": 0.4, "2": 0.4, "3": 0.2, "4":0.2,"5": 0.2}},
-                "incidence": 0.75,
+            "category": {"ratios": {"1": 0.1, "2": 0.1, "3": 0.2, "4": 0.2,"5": 0.2, "6": 0.2}},
+            "incidence": 1,
             },
         ),
     ),
@@ -74,11 +72,10 @@ study = StudyDefinition(
         include_day=True,
         returning="binary_flag",
         return_expectations={
-            "date": {"earliest": "2015-01-01", "latest": "today"},
-            "incidence": 0.4
+            "date": {"earliest": "2000-01-01", "latest": "today"},
+            "incidence": 0.8
         }
     ),
-    ### age at diagnosis
     age_pa_ca=patients.age_as_of(
         "prostate_ca_date",
         return_expectations={
@@ -92,7 +89,7 @@ study = StudyDefinition(
             "<65": """ age_pa_ca < 65""",
             "65-74": """ age_pa_ca >= 65 AND age_pa_ca < 75""",
             "75-84": """ age_pa_ca >= 75 AND age_pa_ca < 85""",
-            "85+": """ age_pa_ca >=  85 AND age_pa_ca < 120""",
+            "85+": """ age_pa_ca >= 85""",
         },
         return_expectations={
             "rate": "universal",
@@ -169,4 +166,4 @@ study = StudyDefinition(
             },
         },
     ),
-    )
+)
