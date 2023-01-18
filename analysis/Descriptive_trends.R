@@ -133,13 +133,13 @@ ggsave(
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
 
 Table1 <- as.data.frame(NA)
-xx <- c("total number","average age","sd age")
+xx <- c("total_number","average_age","sd_age")
 Table1[xx] <- NA
-Table1[1,"total number"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
+Table1[1,"total_number"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
 Input2 <- Input[Input$prostate_ca==1,]
 
-Table1[1,"average age"] <- mean(Input2$age_pa_ca)
-Table1[1,"sd age"] <- sd(Input2$age_pa_ca)
+Table1[1,"average_age"] <- mean(Input2$age_pa_ca)
+Table1[1,"sd_age"] <- sd(Input2$age_pa_ca)
 Table1[names(table(Input2$ethnicity))] <- NA
 Table1[1,names(table(Input2$ethnicity))] <- plyr::round_any(as.numeric(table(Input2$ethnicity)), 5, f = round)
 Table1[names(table(Input2$sex))] <- NA

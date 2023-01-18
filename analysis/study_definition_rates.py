@@ -17,12 +17,12 @@ study = StudyDefinition(
         """
         registered
         AND NOT has_died
-        AND (age >=18 AND age <= 110)
+        AND (age >=18 AND age <= 120)
         AND (sex = "M")
         """
     ),
     registered=patients.registered_as_of(
-        "last_day_of_month(index_date)",
+        "first_day_of_month(index_date)",
         return_expectations={"incidence":0.95}
     ),
     has_died=patients.died_from_any_cause(
@@ -130,7 +130,7 @@ study = StudyDefinition(
             "<65": """ age < 65""",
             "65-74": """ age >= 65 AND age < 75""",
             "75-84": """ age >= 75 AND age < 85""",
-            "85+": """ age >=  85 AND age < 120""",
+            "85+": """ age >= 85""",
         },
         return_expectations={
             "rate": "universal",
