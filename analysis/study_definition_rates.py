@@ -126,7 +126,8 @@ study = StudyDefinition(
 ### demographics: sex, ethnicity, IMD, and region
     age_group=patients.categorised_as(
         {
-            "<65": "DEFAULT",
+            "Missing": "DEFAULT",
+            "<65": """ age < 65""",
             "65-74": """ age >= 65 AND age < 75""",
             "75-84": """ age >= 75 AND age < 85""",
             "85+": """ age >=  85 AND age < 120""",
@@ -135,10 +136,11 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "<65": 0.25,
-                    "65-74": 0.25,
-                    "75-84": 0.25,
-                    "85+": 0.25,
+                    "Missing": 0.2
+                    "<65": 0.2,
+                    "65-74": 0.2,
+                    "75-84": 0.2,
+                    "85+": 0.2,
                 }
             },
         },
@@ -164,7 +166,7 @@ study = StudyDefinition(
     ),
     imd_cat=patients.categorised_as(
         {
-            "IMD_0": "DEFAULT",
+            "Missing": "DEFAULT",
             "IMD_1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
             "IMD_2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
             "IMD_3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
@@ -180,7 +182,7 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "IMD_0": 0.05,
+                    "Missing": 0.05,
                     "IMD_1": 0.19,
                     "IMD_2": 0.19,
                     "IMD_3": 0.19,
