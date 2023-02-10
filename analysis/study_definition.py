@@ -110,25 +110,25 @@ study = StudyDefinition(
             "category": {"ratios": {"M": 0.99, "F": 0.01}},
         }
     ),
-    region=patients.registered_practice_as_of(
-        "index_date",
-        returning="nuts1_region_name",
-        return_expectations={
-            "rate": "universal",
-            "category": {
-                "ratios": {
-                    "North East": 0.1,
-                    "North West": 0.1,
-                    "Yorkshire and the Humber": 0.2,
-                    "East Midlands": 0.1,
-                    "West Midlands": 0.1,
-                    "East of England": 0.1,
-                    "London": 0.1,
-                    "South East": 0.2,
-                },
-            },
-        },
-    ),
+    # region=patients.registered_practice_as_of(
+    #     "index_date",
+    #     returning="nuts1_region_name",
+    #     return_expectations={
+    #         "rate": "universal",
+    #         "category": {
+    #             "ratios": {
+    #                 "North East": 0.1,
+    #                 "North West": 0.1,
+    #                 "Yorkshire and the Humber": 0.2,
+    #                 "East Midlands": 0.1,
+    #                 "West Midlands": 0.1,
+    #                 "East of England": 0.1,
+    #                 "London": 0.1,
+    #                 "South East": 0.2,
+    #             },
+    #         },
+    #     },
+    # ),
     imd_Q=patients.address_as_of(
         "index_date",
         returning="index_of_multiple_deprivation",
