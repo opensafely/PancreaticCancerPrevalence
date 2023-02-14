@@ -3,7 +3,7 @@ from cohortextractor import StudyDefinition, patients
 from codelists import *
 
 start_date = "2015-01-01"
-end_date = "2022-12-01"
+end_date = "2022-12-31"
 
 study = StudyDefinition(
     default_expectations={
@@ -12,8 +12,56 @@ study = StudyDefinition(
         "incidence": 0.5,
     },
     index_date=end_date,
-    population=patients.all(),
-
+    population=patients.satisfying(
+        """
+        registered AND
+        (NOT died) AND
+        (age_pa_ca >=18 AND age_pa_ca <=120) AND
+        (sex = "M") AND
+        prostate_ca
+        """,
+    ),
+    registered=patients.registered_as_of(
+        "2015-01-01",
+        return_expectations={"incidence": 0.9},
+    ),
+    # registered=patients.registered_with_one_practice_between(
+    #     "2015-01-01", "2022-12-31"
+    # ),
+    died=patients.died_from_any_cause(
+        on_or_before="2015-01-01",
+        returning="binary_flag",
+        return_expectations={"incidence": 0.1}
+        ),
+    # age=patients.age_as_of(
+    #     "2015-01-01",
+    #     return_expectations={
+    #         "rate": "universal",
+    #         "int": {"distribution": "population_ages"},
+    #     },
+    # ),
+    # deregistered=patients.date_deregistered_from_all_supported_practices(
+    #     date_format="YYYY-MM-DD"
+    # ),
+    prostate_ca=patients.with_these_clinical_events(
+        prostate_cancer_codes,
+        on_or_before="last_day_of_month(index_date)",
+        find_first_match_in_period=True,
+        include_date_of_match=True,
+        include_month=True,
+        include_day=True,
+        returning="binary_flag",
+        return_expectations={
+            "date": {"earliest": "2000-01-01", "latest": "today"},
+            "incidence": 1.0
+        }
+    ),
+    sex=patients.sex(
+        return_expectations={
+            "rate": "universal",
+            "category": {"ratios": {"M": 0.5, "F": 0.5}},
+        }
+    ),
     ethnicity=patients.categorised_as(
         {
             "Missing": "DEFAULT",
@@ -47,40 +95,56 @@ study = StudyDefinition(
             },
         ),
     ),
-    died=patients.died_from_any_cause(
-        on_or_before="index_date",
-        returning="date_of_death",
-        date_format="YYYY-MM-DD",
+    imd_cat=patients.categorised_as(
+        {
+            "Missing": "DEFAULT",
+            "IMD_1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
+            "IMD_2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
+            "IMD_3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
+            "IMD_4": """index_of_multiple_deprivation >= 32844*3/5 AND index_of_multiple_deprivation < 32844*4/5""",
+            "IMD_5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844""",
+        },
+        index_of_multiple_deprivation=patients.address_as_of(
+            "2015-01-01",
+            returning="index_of_multiple_deprivation",
+            round_to_nearest=100,
+        ),
         return_expectations={
-            "date": {"earliest" : "2020-02-01"},
-            "rate": "exponential_increase"
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "Missing": 0.05,
+                    "IMD_1": 0.19,
+                    "IMD_2": 0.19,
+                    "IMD_3": 0.19,
+                    "IMD_4": 0.19,
+                    "IMD_5": 0.19,
+                }
+            },
         },
     ),
-    has_died=patients.died_from_any_cause(
-        on_or_before="index_date",
-        returning='binary_flag',
-        return_expectations={
-            "incidence": 0.4
-        },
-    ),
-    prostate_ca=patients.with_these_clinical_events(
-        prostate_cancer_codes,
-        on_or_before="index_date",
-        find_first_match_in_period=True,
-        include_date_of_match=True,
-        include_month=True,
-        include_day=True,
-        returning="binary_flag",
-        return_expectations={
-            "date": {"earliest": "2000-01-01", "latest": "today"},
-            "incidence": 0.8
-        }
-    ),
+    # died=patients.died_from_any_cause(
+    #     on_or_before="index_date",
+    #     returning="date_of_death",
+    #     date_format="YYYY-MM-DD",
+    #     return_expectations={
+    #         "date": {"earliest" : "2020-02-01"},
+    #         "rate": "exponential_increase"
+    #     },
+    # ),
+    # has_died=patients.died_from_any_cause(
+    #     on_or_before="index_date",
+    #     returning='binary_flag',
+    #     return_expectations={
+    #         "incidence": 0.4
+    #     },
+    # ),
     age_pa_ca=patients.age_as_of(
         "prostate_ca_date",
         return_expectations={
             "rate": "exponential_increase",
             "int": {"distribution": "population_ages"},
+            "incidence": 1.0
         },
     ),
     age_group=patients.categorised_as(
@@ -104,66 +168,28 @@ study = StudyDefinition(
             },
         },
     ),
-    sex=patients.sex(
-        return_expectations={
-            "rate": "universal",
-            "category": {"ratios": {"M": 0.99, "F": 0.01}},
-        }
-    ),
-    # region=patients.registered_practice_as_of(
-    #     "index_date",
-    #     returning="nuts1_region_name",
-    #     return_expectations={
-    #         "rate": "universal",
-    #         "category": {
-    #             "ratios": {
-    #                 "North East": 0.1,
-    #                 "North West": 0.1,
-    #                 "Yorkshire and the Humber": 0.2,
-    #                 "East Midlands": 0.1,
-    #                 "West Midlands": 0.1,
-    #                 "East of England": 0.1,
-    #                 "London": 0.1,
-    #                 "South East": 0.2,
-    #             },
-    #         },
-    #     },
-    # ),
-    imd_Q=patients.address_as_of(
-        "index_date",
-        returning="index_of_multiple_deprivation",
-        round_to_nearest=100,
-        return_expectations={
-            "rate": "universal",
-            "category": {"ratios": {"100": 0.1, "200": 0.2, "300": 0.7}},
-        },
-    ),
-    imd_cat=patients.categorised_as(
-        {
-            "Missing": "DEFAULT",
-            "1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
-            "2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
-            "3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
-            "4": """index_of_multiple_deprivation >= 32844*3/5 AND index_of_multiple_deprivation < 32844*4/5""",
-            "5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844""",
-        },
-        index_of_multiple_deprivation=patients.address_as_of(
-            "index_date",
-            returning="index_of_multiple_deprivation",
-            round_to_nearest=100,
+    incidence=patients.satisfying(
+        """
+        diagnosis AND
+        NOT previous
+        """,
+        diagnosis=patients.with_these_clinical_events(
+            prostate_cancer_codes,
+            returning="binary_flag",
+            find_first_match_in_period=True,
+            between=[
+                "2015-01-01",
+                "last_day_of_month(index_date)",
+            ],
+            return_expectations={"incidence": 0.5}
         ),
-        return_expectations={
-            "rate": "universal",
-            "category": {
-                "ratios": {
-                    "Missing": 0.05,
-                    "1": 0.19,
-                    "2": 0.19,
-                    "3": 0.19,
-                    "4": 0.19,
-                    "5": 0.19,
-                }
-            },
-        },
+        previous=patients.with_these_clinical_events(
+            codelist=prostate_cancer_codes,
+            returning="binary_flag",
+            find_first_match_in_period=True,
+            on_or_before="2014-12-31",
+            return_expectations={"incidence": 0.1},
+        ),
+        return_expectations={"incidence": 0.4},
     ),
 )

@@ -98,7 +98,7 @@ study = StudyDefinition(
         diagnosis=patients.with_these_clinical_events(
             prostate_cancer_codes,
             returning="binary_flag",
-            find_last_match_in_period=True,
+            find_first_match_in_period=True,
             between=[
                 "first_day_of_month(index_date)",
                 "last_day_of_month(index_date)",
