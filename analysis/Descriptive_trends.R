@@ -133,17 +133,82 @@ ggsave(
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
 
 Table1 <- as.data.frame(NA)
-xx <- c("total_number","average_age","sd_age")
+xx <- c("preva","ageP","sdP","inci","ageI","sdI",
+        "inci15","ageI15","sdI15","inci16","ageI16","sdI16",
+        "inci17","ageI17","sdI17","inci18","ageI18","sdI18",
+        "inci19","ageI19","sdI19","inci20","ageI20","sdI20",
+        "inci21","ageI21","sdI21","inci22","ageI22","sdI22"
+        )
 Table1[xx] <- NA
-Table1[1,"total_number"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
-Input2 <- Input[Input$prostate_ca==1,]
+Table1[1,"preva"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
+Table1[1,"ageP"] <- mean(Input$age_pa_ca)
+Table1[1,"sdP"] <- sd(Input$age_pa_ca)
 
-Table1[1,"average_age"] <- mean(Input2$age_pa_ca)
-Table1[1,"sd_age"] <- sd(Input2$age_pa_ca)
-Table1[names(table(Input2$ethnicity))] <- NA
-Table1[1,names(table(Input2$ethnicity))] <- plyr::round_any(as.numeric(table(Input2$ethnicity)), 5, f = round)
-Table1[names(table(Input2$sex))] <- NA
-Table1[1,names(table(Input2$sex))] <- plyr::round_any(as.numeric(table(Input2$sex)), 5, f = round)
+Input2 <- Input[Input$prostate_ca_date>= "2015-01-01",]
+Table1[1,"inci"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI"] <- sd(Input2$age_pa_ca)
+
+Table1[names(table(Input$ethnicity))] <- NA
+Table1[1,names(table(Input$ethnicity))] <- plyr::round_any(as.numeric(table(Input$ethnicity)), 5, f = round)
+Table1[names(table(Input$sex))] <- NA
+Table1[1,names(table(Input$sex))] <- plyr::round_any(as.numeric(table(Input$sex)), 5, f = round)
+Table1[names(table(Input$imd_cat))] <- NA
+Table1[1,names(table(Input$imd_cat))] <- plyr::round_any(as.numeric(table(Input$imd_cat)), 5, f = round)
+
+Input2 <- Input[Input$prostate_ca_date>= "2015-01-01" & Input$prostate_ca_date<= "2015-12-31",]
+Table1[1,"inci15"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI15"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI15"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2016-01-01" & Input$prostate_ca_date<= "2016-12-31",]
+Table1[1,"inci16"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI16"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI16"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2017-01-01" & Input$prostate_ca_date<= "2017-12-31",]
+Table1[1,"inci17"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI17"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI17"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2018-01-01" & Input$prostate_ca_date<= "2018-12-31",]
+Table1[1,"inci18"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI18"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI18"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2019-01-01" & Input$prostate_ca_date<= "2019-12-31",]
+Table1[1,"inci19"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI19"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI19"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2020-01-01" & Input$prostate_ca_date<= "2020-12-31",]
+Table1[1,"inci20"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI20"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI20"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2020-01-01" & Input$prostate_ca_date<= "2020-12-31",]
+Table1[1,"inci20"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI20"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI20"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2021-01-01" & Input$prostate_ca_date<= "2021-12-31",]
+Table1[1,"inci21"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI21"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI21"] <- sd(Input2$age_pa_ca)
+
+Input2 <- Input[Input$prostate_ca_date>= "2022-01-01" & Input$prostate_ca_date<= "2022-12-31",]
+Table1[1,"inci22"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI22"] <- mean(Input2$age_pa_ca)
+Table1[1,"sdI22"] <- sd(Input2$age_pa_ca)
+
+Table1 <- t(Table1)
+Table1 <- as.data.frame(Table1)
+colnames(Table1) <- "summaryStat"
+Table1$var <- row.names(Table1)
+
+Table1 <- Table1[,c(2,1)]
+
+Table1$summaryStat <- round(Table1$summaryStat,1)
 
 write.table(Table1, here::here("output", "Table1.csv"),sep = ",",row.names = FALSE)
 
