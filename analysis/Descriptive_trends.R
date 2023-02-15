@@ -155,12 +155,12 @@ xl <- Input2$age_pa_ca; Table1[1,"sdI"] <- paste0(round(sd(xl),n),
                                           " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
                                           round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
-Table1[names(table(Input$ethnicity))] <- NA
-Table1[1,names(table(Input$ethnicity))] <- plyr::round_any(as.numeric(table(Input$ethnicity)), 5, f = round)
-Table1[names(table(Input$sex))] <- NA
-Table1[1,names(table(Input$sex))] <- plyr::round_any(as.numeric(table(Input$sex)), 5, f = round)
-Table1[names(table(Input$imd_cat))] <- NA
-Table1[1,names(table(Input$imd_cat))] <- plyr::round_any(as.numeric(table(Input$imd_cat)), 5, f = round)
+Input$ethnicity[which(is.na(Input$ethnicity))] <- "NAs"; Table1[names(table(Input$ethnicity, exclude=NULL))] <- NA
+Table1[1,names(table(Input$ethnicity, exclude=NULL))] <- plyr::round_any(as.numeric(table(Input$ethnicity, exclude=NULL)), 5, f = round)
+Input$sex[which(is.na(Input$sex))] <- "NAs"; Table1[names(table(Input$sex, exclude=NULL))] <- NA
+Table1[1,names(table(Input$sex, exclude=NULL))] <- plyr::round_any(as.numeric(table(Input$sex, exclude=NULL)), 5, f = round)
+Input$imd_cat[which(is.na(Input$imd_cat))] <- "NAs"; Table1[names(table(Input$imd_cat, exclude=NULL))] <- NA
+Table1[1,names(table(Input$imd_cat, exclude=NULL))] <- plyr::round_any(as.numeric(table(Input$imd_cat, exclude=NULL)), 5, f = round)
 
 Input2 <- Input[Input$prostate_ca_date>= "2015-01-01" & Input$prostate_ca_date<= "2015-12-31",]
 Table1[1,"inci15"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
