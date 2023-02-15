@@ -18,13 +18,13 @@ actions:
         cohort: output/input.csv
 
   generate_rates_1:    
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2018-06-01 to 2018-12-01 by month" --skip-existing --output-dir=output --output-format=feather
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2015-01-01 to 2018-12-01 by month" --skip-existing --output-dir=output --output-format=feather
     outputs:      
       highly_sensitive:
         cohort: output/measures/inpu*.feather
   
   generate_rates_2:    
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2019-01-01 to 2019-06-01 by month" --skip-existing --output-dir=output --output-format=feather
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_rates --index-date-range "2019-01-01 to 2022-12-01 by month" --skip-existing --output-dir=output --output-format=feather
     outputs:      
       highly_sensitive:
         cohort: output/measures/inp*.feather
