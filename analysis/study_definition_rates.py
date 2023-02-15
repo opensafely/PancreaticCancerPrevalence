@@ -173,7 +173,7 @@ study = StudyDefinition(
             "5 (least deprived)": "imd >= 32844*4/5 AND imd <= 32844",
         },
         imd=patients.address_as_of(
-            "2015-01-01",
+            "first_day_of_month(index_date)",
             returning="index_of_multiple_deprivation",
             round_to_nearest=100,
         ),
