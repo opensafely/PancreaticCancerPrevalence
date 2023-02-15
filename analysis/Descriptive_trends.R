@@ -129,6 +129,8 @@ ggsave(
 # Summarise population data from the input.csv
 ###
 
+n <- 3; rounding level 
+
 #Input <- read_csv(here::here("output", "input.csv"),show_col_types = FALSE)
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
 
@@ -142,16 +144,16 @@ xx <- c("preva","ageP","sdP","inci","ageI","sdI",
 Table1[xx] <- NA
 Table1[1,"preva"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
 Table1[1,"ageP"] <- round(mean(Input$age_pa_ca))
-xl <- Input$age_pa_ca; Table1[1,"sdP"] <- paste0(round(sd(xl),1),
-                          " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                          round(t.test(xl)$conf.int[2],1),")")
+xl <- Input$age_pa_ca; Table1[1,"sdP"] <- paste0(round(sd(xl),n),
+                          " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                          round(t.test(xl)$conf.int[2],n),")")
 
 Input2 <- Input[Input$prostate_ca_date>= "2015-01-01",]
 Table1[1,"inci"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI"] <- round(mean(Input2$age_pa_ca),1)
-xl <- Input2$age_pa_ca; Table1[1,"sdI"] <- paste0(round(sd(xl),1),
-                                          " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                          round(t.test(xl)$conf.int[2],1),")"); rm(Input2)
+Table1[1,"ageI"] <- round(mean(Input2$age_pa_ca),n)
+xl <- Input2$age_pa_ca; Table1[1,"sdI"] <- paste0(round(sd(xl),n),
+                                          " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                          round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
 Table1[names(table(Input$ethnicity))] <- NA
 Table1[1,names(table(Input$ethnicity))] <- plyr::round_any(as.numeric(table(Input$ethnicity)), 5, f = round)
@@ -162,72 +164,72 @@ Table1[1,names(table(Input$imd_cat))] <- plyr::round_any(as.numeric(table(Input$
 
 Input2 <- Input[Input$prostate_ca_date>= "2015-01-01" & Input$prostate_ca_date<= "2015-12-31",]
 Table1[1,"inci15"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI15"] <- round(mean(Input2$age_pa_ca),1)
-xl <- Input2$age_pa_ca; Table1[1,"sdI15"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); 
+Table1[1,"ageI15"] <- round(mean(Input2$age_pa_ca),n)
+xl <- Input2$age_pa_ca; Table1[1,"sdI15"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); 
 
 
 Input3 <- Input[Input$prostate_ca_date>= "2016-01-01" & Input$prostate_ca_date<= "2016-12-31",]
 Table1[1,"inci16"] <- plyr::round_any(length(which(Input3$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI16"] <- paste0(round(mean(Input3$age_pa_ca),1)," (p=",
+Table1[1,"ageI16"] <- paste0(round(mean(Input3$age_pa_ca),n)," (p=",
                                    round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input3$age_pa_ca; Table1[1,"sdI16"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); rm(Input2)
+xl <- Input3$age_pa_ca; Table1[1,"sdI16"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
 
 Input2 <- Input[Input$prostate_ca_date>= "2017-01-01" & Input$prostate_ca_date<= "2017-12-31",]
 Table1[1,"inci17"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI17"] <- paste0(round(mean(Input2$age_pa_ca),1)," (p=",
+Table1[1,"ageI17"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input2$age_pa_ca; Table1[1,"sdI17"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); rm(Input3)
+xl <- Input2$age_pa_ca; Table1[1,"sdI17"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); rm(Input3)
 
 
 Input3 <- Input[Input$prostate_ca_date>= "2018-01-01" & Input$prostate_ca_date<= "2018-12-31",]
 Table1[1,"inci18"] <- plyr::round_any(length(which(Input3$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI18"] <- paste0(round(mean(Input3$age_pa_ca),1)," (p=",
+Table1[1,"ageI18"] <- paste0(round(mean(Input3$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input3$age_pa_ca; Table1[1,"sdI18"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); rm(Input2)
+xl <- Input3$age_pa_ca; Table1[1,"sdI18"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
 
 Input2 <- Input[Input$prostate_ca_date>= "2019-01-01" & Input$prostate_ca_date<= "2019-12-31",]
 Table1[1,"inci19"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI19"] <- paste0(round(mean(Input2$age_pa_ca),1)," (p=",
+Table1[1,"ageI19"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input2$age_pa_ca; Table1[1,"sdI19"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); rm(Input3)
+xl <- Input2$age_pa_ca; Table1[1,"sdI19"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); rm(Input3)
 
 
 Input3 <- Input[Input$prostate_ca_date>= "2020-01-01" & Input$prostate_ca_date<= "2020-12-31",]
 Table1[1,"inci20"] <- plyr::round_any(length(which(Input3$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI20"] <- paste0(round(mean(Input3$age_pa_ca),1)," (p=",
+Table1[1,"ageI20"] <- paste0(round(mean(Input3$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input3$age_pa_ca; Table1[1,"sdI20"] <- paste0(round(sd(xl),1),
-                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                  round(t.test(xl)$conf.int[2],1),")"); rm(Input2)
+xl <- Input3$age_pa_ca; Table1[1,"sdI20"] <- paste0(round(sd(xl),n),
+                                                  " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                  round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
 Input2 <- Input[Input$prostate_ca_date>= "2021-01-01" & Input$prostate_ca_date<= "2021-12-31",]
 Table1[1,"inci21"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI21"] <- paste0(round(mean(Input2$age_pa_ca),1)," (p=",
+Table1[1,"ageI21"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input2$age_pa_ca; Table1[1,"sdI21"] <- paste0(round(sd(xl),1),
-                                                    " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                    round(t.test(xl)$conf.int[2],1),")"); rm(Input3)
+xl <- Input2$age_pa_ca; Table1[1,"sdI21"] <- paste0(round(sd(xl),n),
+                                                    " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                    round(t.test(xl)$conf.int[2],n),")"); rm(Input3)
 
 
 Input3 <- Input[Input$prostate_ca_date>= "2022-01-01" & Input$prostate_ca_date<= "2022-12-31",]
 Table1[1,"inci22"] <- plyr::round_any(length(which(Input3$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI22"] <- paste0(round(mean(Input3$age_pa_ca),1)," (p=",
+Table1[1,"ageI22"] <- paste0(round(mean(Input3$age_pa_ca),n)," (p=",
                              round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
-xl <- Input3$age_pa_ca; Table1[1,"sdI22"] <- paste0(round(sd(xl),1),
-                                                    " (95CIs: ",round(t.test(xl)$conf.int[1],1)," to ",
-                                                    round(t.test(xl)$conf.int[2],1),")"); rm(Input2)
+xl <- Input3$age_pa_ca; Table1[1,"sdI22"] <- paste0(round(sd(xl),n),
+                                                    " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                    round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
 
 
 Table1 <- t(Table1)
