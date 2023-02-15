@@ -25,24 +25,11 @@ study = StudyDefinition(
         "2015-01-01",
         return_expectations={"incidence": 0.9},
     ),
-    # registered=patients.registered_with_one_practice_between(
-    #     "2015-01-01", "2022-12-31"
-    # ),
     died=patients.died_from_any_cause(
         on_or_before="2015-01-01",
         returning="binary_flag",
         return_expectations={"incidence": 0.1}
         ),
-    # age=patients.age_as_of(
-    #     "2015-01-01",
-    #     return_expectations={
-    #         "rate": "universal",
-    #         "int": {"distribution": "population_ages"},
-    #     },
-    # ),
-    # deregistered=patients.date_deregistered_from_all_supported_practices(
-    #     date_format="YYYY-MM-DD"
-    # ),
     prostate_ca=patients.with_these_clinical_events(
         prostate_cancer_codes,
         on_or_before="last_day_of_month(index_date)",
@@ -123,22 +110,6 @@ study = StudyDefinition(
             },
         },
     ),
-    # died=patients.died_from_any_cause(
-    #     on_or_before="index_date",
-    #     returning="date_of_death",
-    #     date_format="YYYY-MM-DD",
-    #     return_expectations={
-    #         "date": {"earliest" : "2020-02-01"},
-    #         "rate": "exponential_increase"
-    #     },
-    # ),
-    # has_died=patients.died_from_any_cause(
-    #     on_or_before="index_date",
-    #     returning='binary_flag',
-    #     return_expectations={
-    #         "incidence": 0.4
-    #     },
-    # ),
     age_pa_ca=patients.age_as_of(
         "prostate_ca_date",
         return_expectations={
