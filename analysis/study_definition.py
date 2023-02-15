@@ -62,38 +62,47 @@ study = StudyDefinition(
             "category": {"ratios": {"M": 0.5, "F": 0.5}},
         }
     ),
-    ethnicity=patients.categorised_as(
-        {
-            "Missing": "DEFAULT",
-            "White": """ ethnicity_code=1 """,
-            "Mixed": """ ethnicity_code=2 """,
-            "South_Asian": """ ethnicity_code=3 """,
-            "Black": """ ethnicity_code=4 """,
-            "Other": """ ethnicity_code=5 """,
-        },
+    # ethnicity=patients.categorised_as(
+    #     {
+    #         "Missing": "DEFAULT",
+    #         "White": """ ethnicity_code=1 """,
+    #         "Mixed": """ ethnicity_code=2 """,
+    #         "South_Asian": """ ethnicity_code=3 """,
+    #         "Black": """ ethnicity_code=4 """,
+    #         "Other": """ ethnicity_code=5 """,
+    #     },
+    #     return_expectations={
+    #         "rate": "universal",
+    #         "category": {
+    #             "ratios": {
+    #                 "Missing": 0.4,
+    #                 "White": 0.2,
+    #                 "Mixed": 0.1,
+    #                 "South_Asian": 0.1,
+    #                 "Black": 0.1,
+    #                 "Other": 0.1,
+    #             }
+    #         },
+    #     },
+    #     ethnicity_code=patients.with_these_clinical_events(
+    #         ethnicity_codes,
+    #         returning="category",
+    #         find_last_match_in_period=True,
+    #         return_expectations={
+    #         "category": {"ratios": {"1": 0.1, "2": 0.1, "3": 0.2, "4": 0.2,"5": 0.2, "6": 0.2}},
+    #         "incidence": 1,
+    #         },
+    #     ),
+    # ),
+    ethnicity=patients.with_these_clinical_events(
+        ethnicity_codes,
+        returning="category",
+        find_last_match_in_period=True,
+        include_date_of_match=False,
         return_expectations={
-            "rate": "universal",
-            "category": {
-                "ratios": {
-                    "Missing": 0.4,
-                    "White": 0.2,
-                    "Mixed": 0.1,
-                    "South_Asian": 0.1,
-                    "Black": 0.1,
-                    "Other": 0.1,
-                }
-            },
+            "category": {"ratios": {"1": 0.2, "2":0.2, "3":0.2, "4":0.2, "5": 0.2}},
+            "incidence": 0.75,
         },
-        ethnicity_code=patients.with_these_clinical_events(
-            ethnicity_codes,
-            returning="category",
-            find_last_match_in_period=True,
-            on_or_before="index_date",
-            return_expectations={
-            "category": {"ratios": {"1": 0.1, "2": 0.1, "3": 0.2, "4": 0.2,"5": 0.2, "6": 0.2}},
-            "incidence": 1,
-            },
-        ),
     ),
     imd_cat=patients.categorised_as(
         {
@@ -123,6 +132,17 @@ study = StudyDefinition(
             },
         },
     ),
+
+    imd2=patients.address_as_of(
+        "2020-02-01",
+        returning="index_of_multiple_deprivation",
+        round_to_nearest=100,
+        return_expectations={
+            "rate": "universal",
+            "category": {"ratios": {"100": 0.1, "200": 0.2, "300": 0.7}},
+        },
+    ),
+
     # died=patients.died_from_any_cause(
     #     on_or_before="index_date",
     #     returning="date_of_death",

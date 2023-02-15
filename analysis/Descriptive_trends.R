@@ -143,7 +143,7 @@ xx <- c("preva","ageP","sdP","inci","ageI","sdI",
         )
 Table1[xx] <- NA
 Table1[1,"preva"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
-Table1[1,"ageP"] <- round(mean(Input$age_pa_ca))
+Table1[1,"ageP"] <- round(mean(Input$age_pa_ca),n)
 xl <- Input$age_pa_ca; Table1[1,"sdP"] <- paste0(round(sd(xl),n),
                           " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
                           round(t.test(xl)$conf.int[2],n),")")
