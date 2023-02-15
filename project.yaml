@@ -52,12 +52,10 @@ actions:
     outputs:
       moderately_sensitive:
         measure_csv1: output/measures/measure_prevalence*_rate.csv
-        measure_csv2: output/measures/measure_prevalencebyRegion*_rate.csv
         measure_csv3: output/measures/measure_prevalencebyIMD*_rate.csv
         measure_csv4: output/measures/measure_prevalencebyEthnicity*_rate.csv
         measure_csv5: output/measures/measure_prevalencebyAge*_rate.csv
         measure_csv6: output/measures/measure_incidence*_rate.csv
-        measure_csv7: output/measures/measure_incidencebyRegion*_rate.csv
         measure_csv8: output/measures/measure_incidencebyIMD*_rate.csv
         measure_csv9: output/measures/measure_incidencebyEthnicity*_rate.csv
         measure_csv10: output/measures/measure_incidencebyAge*_rate.csv
@@ -78,18 +76,14 @@ actions:
         Fig4: output/incidence_by_age_group.png
         Fig5: output/incidence_by_ethnicity.png
         Fig6: output/incidence_by_imd_cat.png
-        Fig7: output/incidence_by_region.png
         Fig8: output/prevalenc_by_age_group.png
         Fig9: output/prevalenc_by_ethnicity.png
         Fig10: output/prevalenc_by_imd_cat.png
-        Fig11: output/prevalenc_by_region.png
         csv1: output/Rates_rounded_prevalence.csv
-        csv2: output/Rates_rounded_prevalence_by_region.csv
         csv3: output/Rates_rounded_prevalence_by_imd_cat.csv
         csv4: output/Rates_rounded_prevalence_by_ethnicity.csv
         csv5: output/Rates_rounded_prevalence_by_age_group.csv
         csv6: output/Rates_rounded_incidence.csv
-        csv7: output/Rates_rounded_incidence_by_region.csv
         csv8: output/Rates_rounded_incidence_by_imd_cat.csv
         csv9: output/Rates_rounded_incidence_by_ethnicity.csv
         csv10: output/Rates_rounded_incidence_by_age_group.csv

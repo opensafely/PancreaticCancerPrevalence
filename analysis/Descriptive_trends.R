@@ -80,9 +80,9 @@ ggsave(
 }
 
 for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate.csv",
-            "measure_incidencebyIMD_rate.csv","measure_incidencebyRegion_rate.csv",
+            "measure_incidencebyIMD_rate.csv",
             "measure_prevalencebyAge_rate.csv","measure_prevalencebyEthnicity_rate.csv",
-            "measure_prevalencebyIMD_rate.csv","measure_prevalencebyRegion_rate.csv")){
+            "measure_prevalencebyIMD_rate.csv")){
   
   Rates <- read_csv(here::here("output", "measures", i))
   Rates_rounded <- as.data.frame(Rates)
@@ -104,7 +104,6 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   
 p <- ggplot(data = Rates_rounded,aes(date, value2, color = Rates_rounded[,1], lty = Rates_rounded[,1])) +
   geom_line()+
-  #geom_point(color = "region")+
   scale_x_date(date_breaks = "2 month",
                date_labels = "%Y-%m")+
   labs(title = paste0(substr(i, 9, 17),"_by_",colnames(Rates_rounded)[1]), 
