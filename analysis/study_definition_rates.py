@@ -123,7 +123,7 @@ study = StudyDefinition(
         match_only_underlying_cause=False,
         return_expectations={"incidence": 0.20},
     ),
-### demographics: sex, ethnicity, IMD, and region
+### demographics: age, ethnicity, IMD, and region
     age_group=patients.categorised_as(
         {
             "Missing": "DEFAULT",
@@ -143,6 +143,16 @@ study = StudyDefinition(
                     "85+": 0.2,
                 }
             },
+        },
+    ),
+    ethnicity=patients.with_these_clinical_events(
+        ethnicity_codes,
+        returning="category",
+        find_last_match_in_period=True,
+        include_date_of_match=False,
+        return_expectations={
+            "category": {"ratios": {"1": 0.2, "2":0.2, "3":0.2, "4":0.2, "5": 0.2}},
+            "incidence": 0.75,
         },
     ),
     region=patients.registered_practice_as_of(
@@ -166,15 +176,15 @@ study = StudyDefinition(
     ),
     imd_cat=patients.categorised_as(
         {
-            "Missing": "DEFAULT",
-            "IMD_1": """index_of_multiple_deprivation >=1 AND index_of_multiple_deprivation < 32844*1/5""",
-            "IMD_2": """index_of_multiple_deprivation >= 32844*1/5 AND index_of_multiple_deprivation < 32844*2/5""",
-            "IMD_3": """index_of_multiple_deprivation >= 32844*2/5 AND index_of_multiple_deprivation < 32844*3/5""",
-            "IMD_4": """index_of_multiple_deprivation >= 32844*3/5 AND index_of_multiple_deprivation < 32844*4/5""",
-            "IMD_5": """index_of_multiple_deprivation >= 32844*4/5 AND index_of_multiple_deprivation < 32844""",
+            "Unknown": "DEFAULT",
+            "1 (most deprived)": "imd >= 0 AND imd < 32844*1/5",
+            "2": "imd >= 32844*1/5 AND imd < 32844*2/5",
+            "3": "imd >= 32844*2/5 AND imd < 32844*3/5",
+            "4": "imd >= 32844*3/5 AND imd < 32844*4/5",
+            "5 (least deprived)": "imd >= 32844*4/5 AND imd <= 32844",
         },
-        index_of_multiple_deprivation=patients.address_as_of(
-            "last_day_of_month(index_date)",
+        imd=patients.address_as_of(
+            "2015-01-01",
             returning="index_of_multiple_deprivation",
             round_to_nearest=100,
         ),
@@ -182,12 +192,12 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "Missing": 0.05,
-                    "IMD_1": 0.19,
-                    "IMD_2": 0.19,
-                    "IMD_3": 0.19,
-                    "IMD_4": 0.19,
-                    "IMD_5": 0.19,
+                    "Unknown": 0.05,
+                    "1 (most deprived)": 0.19,
+                    "2": 0.19,
+                    "3": 0.19,
+                    "4": 0.19,
+                    "5 (least deprived)": 0.19,
                 }
             },
         },
