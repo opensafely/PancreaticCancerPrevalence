@@ -56,7 +56,6 @@ study = StudyDefinition(
             "incidence": 0.6
         }
     ),
-
 ### age at diagnosis
     age_pa_ca=patients.age_as_of(
         "prevalence_date",
@@ -143,16 +142,6 @@ study = StudyDefinition(
                     "85+": 0.2,
                 }
             },
-        },
-    ),
-    ethnicity=patients.with_these_clinical_events(
-        ethnicity_codes,
-        returning="category",
-        find_last_match_in_period=True,
-        include_date_of_match=False,
-        return_expectations={
-            "category": {"ratios": {"1": 0.2, "2": 0.2, "3": 0.2, "4": 0.2, "5": 0.2}},
-            "incidence": 0.75,
         },
     ),
     region=patients.registered_practice_as_of(
