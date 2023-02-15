@@ -96,6 +96,7 @@ study = StudyDefinition(
     # ),
     ethnicity=patients.categorised_as(
         {
+            "Missing": "DEFAULT",
             "White": """ ethnicity_code=1 """,
             "Mixed": """ ethnicity_code=2 """,
             "Asian": """ ethnicity_code=3 """,
@@ -106,10 +107,11 @@ study = StudyDefinition(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "White": 0.2,
-                    "Mixed": 0.2,
-                    "Asian": 0.2,
-                    "Black": 0.2,
+                    "Missing": 0.4,
+                    "White": 0.1,
+                    "Mixed": 0.1,
+                    "Asian": 0.1,
+                    "Black": 0.1,
                     "Chinese": 0.2,
                 }
             },
