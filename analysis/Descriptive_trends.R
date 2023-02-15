@@ -129,7 +129,7 @@ ggsave(
 # Summarise population data from the input.csv
 ###
 
-n <- 3; rounding level 
+n <- 3; #rounding level 
 
 #Input <- read_csv(here::here("output", "input.csv"),show_col_types = FALSE)
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
