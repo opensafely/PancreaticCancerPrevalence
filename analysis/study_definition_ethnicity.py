@@ -48,9 +48,3 @@ study = StudyDefinition(
         ),
     ),
 )
-
-# 1 - White
-# 2 - Mixed
-# 3 - Asian or Asian British
-# 4 - Black or Black British
-# 5 - Chinese or Other Ethnic Groups
