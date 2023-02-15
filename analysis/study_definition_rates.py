@@ -144,25 +144,6 @@ study = StudyDefinition(
             },
         },
     ),
-    region=patients.registered_practice_as_of(
-        "last_day_of_month(index_date)",
-        returning="nuts1_region_name",
-        return_expectations={
-            "rate": "universal",
-            "category": {
-                "ratios": {
-                    "North East": 0.1,
-                    "North West": 0.1,
-                    "Yorkshire and the Humber": 0.2,
-                    "East Midlands": 0.1,
-                    "West Midlands": 0.1,
-                    "East of England": 0.1,
-                    "London": 0.1,
-                    "South East": 0.2,
-                },
-            },
-        },
-    ),
     imd_cat=patients.categorised_as(
         {
             "Unknown": "DEFAULT",
@@ -202,13 +183,6 @@ measures = [
         small_number_suppression=True,
     ),
     Measure(
-        id="prevalencebyRegion_rate",
-        numerator="prevalence",
-        denominator="population",
-        group_by="region",
-        small_number_suppression=True,
-    ),
-    Measure(
         id="prevalencebyIMD_rate",
         numerator="prevalence",
         denominator="population",
@@ -234,13 +208,6 @@ measures = [
         numerator="incidence",
         denominator="population",
         group_by="population",
-        small_number_suppression=True,
-    ),
-    Measure(
-        id="incidencebyRegion_rate",
-        numerator="incidence",
-        denominator="population",
-        group_by="region",
         small_number_suppression=True,
     ),
     Measure(
