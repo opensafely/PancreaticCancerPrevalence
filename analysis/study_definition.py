@@ -85,30 +85,30 @@ study = StudyDefinition(
     imd_cat=patients.categorised_as(
         {
             "Unknown": "DEFAULT",
-            "1 (most deprived)": "imd >= 0 AND imd < 32844*1/5",
-            "2": "imd >= 32844*1/5 AND imd < 32844*2/5",
-            "3": "imd >= 32844*2/5 AND imd < 32844*3/5",
-            "4": "imd >= 32844*3/5 AND imd < 32844*4/5",
-            "5 (least deprived)": "imd >= 32844*4/5 AND imd <= 32844",
+            "1 (most deprived)": """ imd >= 0 AND imd < 32844*1/5 """,
+            "2": """ imd >= 32844*1/5 AND imd < 32844*2/5 """,
+            "3": """ imd >= 32844*2/5 AND imd < 32844*3/5 """,
+            "4": """ imd >= 32844*3/5 AND imd < 32844*4/5 """,
+            "5 (least deprived)": """ imd >= 32844*4/5 AND imd <= 32844 """,
+        },
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "Unknown": 0.1,
+                    "1 (most deprived)": 0.2,
+                    "2": 0.2,
+                    "3": 0.1,
+                    "4": 0.2,
+                    "5 (least deprived)": 0.2,
+                }
+            },
         },
         imd=patients.address_as_of(
             "2015-01-01",
             returning="index_of_multiple_deprivation",
             round_to_nearest=100,
         ),
-        return_expectations={
-            "rate": "universal",
-            "category": {
-                "ratios": {
-                    "Unknown": 0.05,
-                    "1 (most deprived)": 0.19,
-                    "2": 0.19,
-                    "3": 0.19,
-                    "4": 0.19,
-                    "5 (least deprived)": 0.19,
-                }
-            },
-        },
     ),
     age_pa_ca=patients.age_as_of(
         "prostate_ca_date",
