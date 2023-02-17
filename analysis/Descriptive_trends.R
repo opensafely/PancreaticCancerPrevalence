@@ -40,14 +40,14 @@ for (i in c("measure_incidence_rate.csv",
   ###
   # Redact and round counts 
   ###
-  # was redacted within the measures function - small number suppression 
-  # Round and recalc rates 
+  Rates_rounded[,1] <- redactor(Rates_rounded[,1])
+  #round to the nearest 5 
   for (j in 1:2){
     Rates_rounded[,j] <- plyr::round_any(Rates_rounded[,j], 5, f = round)}
-  
-  Rates_rounded$value <- Rates_rounded[,1]/Rates_rounded$population
+  # calculate the rates 
+  Rates_rounded$value <- round(Rates_rounded[,1]/Rates_rounded$population,1)
   # calc rate per 100,000
-  Rates_rounded$value2 <- Rates_rounded$value*100000
+  Rates_rounded$value2 <- round((Rates_rounded[,1]/Rates_rounded$population)*100000,1)
   write.table(Rates_rounded, here::here("output", paste0("Rates_rounded_",colnames(Rates_rounded)[1],".csv")),
               sep = ",",row.names = FALSE)
   ###### cut date that is after November 
@@ -90,14 +90,14 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   ###
   # Redact and round counts 
   ###
-  # was redacted within the measures function - small number suppression 
-  # Round and recalc rates 
+  Rates_rounded$incidence <- redactor(Rates_rounded$incidence)
+  #round to the nearest 5 
   for (j in 2:3){
     Rates_rounded[,j] <- plyr::round_any(Rates_rounded[,j], 5, f = round)}
   
-  Rates_rounded$value <- Rates_rounded[,2]/Rates_rounded$population
+  Rates_rounded$value <- round(Rates_rounded[,2]/Rates_rounded$population,1)
   # calc rate per 100,000
-  Rates_rounded$value2 <- Rates_rounded$value*100000
+  Rates_rounded$value2 <- round((Rates_rounded[,2]/Rates_rounded$population)*100000,1)
   write.table(Rates_rounded, here::here("output", paste0("Rates_rounded_",colnames(Rates_rounded)[2],"_by_",colnames(Rates_rounded)[1],".csv")),
               sep = ",",row.names = FALSE)
 
@@ -128,7 +128,7 @@ ggsave(
 # Summarise population data from the input.csv
 ###
 
-n <- 3; #rounding level 
+n <- 2; #rounding level 
 
 #Input <- read_csv(here::here("output", "input.csv"),show_col_types = FALSE)
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
