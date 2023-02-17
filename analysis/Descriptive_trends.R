@@ -90,7 +90,8 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   ###
   # Redact and round counts 
   ###
-  Rates_rounded[,2] <- redactor(Rates_rounded[,2][which(is.na(Rates_rounded[,2]))] <- 0)
+  Rates_rounded[which(is.na(Rates_rounded[,2])),2] <- 0
+  Rates_rounded[,2] <- redactor(Rates_rounded[,2])
   #round to the nearest 5 
   for (j in 2:3){
     Rates_rounded[,j] <- plyr::round_any(Rates_rounded[,j], 5, f = round)}
