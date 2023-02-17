@@ -90,8 +90,7 @@ for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate
   ###
   # Redact and round counts 
   ###
-  Rates_rounded[which(is.na(Rates_rounded[,2])),2] <- 0
-  Rates_rounded[,2] <- redactor(Rates_rounded[,2])
+  Rates_rounded[which(Rates_rounded[,2]<=7),2] <- NA
   #round to the nearest 5 
   for (j in 2:3){
     Rates_rounded[,j] <- plyr::round_any(Rates_rounded[,j], 5, f = round)}
@@ -129,7 +128,7 @@ ggsave(
 # Summarise population data from the input.csv
 ###
 
-n <- 2; #rounding level 
+n <- 1; #rounding level 
 
 #Input <- read_csv(here::here("output", "input.csv"),show_col_types = FALSE)
 Input <- read_csv(here::here("output", "input.csv"),col_types = cols(patient_id = col_integer()))
