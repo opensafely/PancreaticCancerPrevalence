@@ -18,10 +18,9 @@ study = StudyDefinition(
         {
             "Missing": "DEFAULT",
             "White": """ ethnicity_code=1 """,
-            "Mixed": """ ethnicity_code=2 """,
+            "Chinese&Mixed": """ ethnicity_code=2 OR ethnicity_code=5 """,
             "Asian": """ ethnicity_code=3 """,
             "Black": """ ethnicity_code=4 """,
-            "Chinese": """ ethnicity_code=5 """,
         },
         return_expectations={
             "rate": "universal",
@@ -29,10 +28,9 @@ study = StudyDefinition(
                 "ratios": {
                     "Missing": 0.4,
                     "White": 0.1,
-                    "Mixed": 0.1,
                     "Asian": 0.1,
-                    "Black": 0.1,
-                    "Chinese": 0.2,
+                    "Black": 0.2,
+                    "Chinese&Mixed": 0.2,
                 }
             },
         },

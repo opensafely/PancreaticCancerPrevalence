@@ -1,7 +1,7 @@
 version: '3.0'
 
 expectations:
-  population_size: 10000
+  population_size: 1000
 
 actions:
   
@@ -10,6 +10,16 @@ actions:
     outputs:
       highly_sensitive:
         cohort: output/input_ethnicity.feather
+
+  # describe_trends:
+  #   run: r:latest analysis/reclassEthnicity.R
+  #   needs: 
+  #     [
+  #       generate_ethnicity
+  #     ]
+  #   outputs:
+  #     moderately_sensitive:
+  #       fig1: output/input_ethnicity2.feather
 
   generate_study_population:
     run: cohortextractor:latest generate_cohort --study-definition study_definition
