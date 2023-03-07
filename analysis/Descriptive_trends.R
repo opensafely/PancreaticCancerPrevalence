@@ -1,7 +1,7 @@
 ### INFO
 # project: Project #: Prostate cancer prevalence
 # author: Agz Leman
-# 12th October 2022
+# March 2023
 # Plots monthly rates 
 ###
 
@@ -50,8 +50,6 @@ for (i in c("measure_incidence_rate.csv",
   Rates_rounded$value2 <- round((Rates_rounded[,1]/Rates_rounded$population)*100000,1)
   write.table(Rates_rounded, here::here("output", paste0("Rates_rounded_",colnames(Rates_rounded)[1],".csv")),
               sep = ",",row.names = FALSE)
-  ###### cut date that is after November 
-  
 
 ###
 # Plot 
@@ -69,7 +67,7 @@ p <- ggplot(data = Rates_rounded,aes(date, value2)) +
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
 p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(value2)+(sd(value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
-p <- p + labs(caption="OpenSafely-TPP February 2022")
+p <- p + labs(caption="OpenSafely-TPP March 2022")
 p <- p + theme(plot.caption = element_text(size=8))
 p <- p + theme(plot.title = element_text(size = 10))
 
@@ -115,7 +113,7 @@ p <- ggplot(data = Rates_rounded,aes(date, value2, color = Rates_rounded[,1], lt
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
 p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(value2)+(sd(value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
-p <- p + labs(caption="OpenSafely-TPP February 2022")
+p <- p + labs(caption="OpenSafely-TPP March 2022")
 p <- p + theme(plot.caption = element_text(size=8))
 p <- p + theme(plot.title = element_text(size = 10))
 

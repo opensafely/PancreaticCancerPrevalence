@@ -15,7 +15,7 @@ prostate_cancer_codes = codelist_from_csv(
 )
 
 # prostate_cancer_ICD10
-# C61 C68.0 C79.8 D40.0
-prostate_cancer_ICD10 = codelist(["C61", "C68.0", "C79.8", "D40.0"], 
+# C61 C68.0 C79.8 D40.0 #other not good 
+prostate_cancer_ICD10 = codelist(["C61"], 
 system ="icd10")
 
