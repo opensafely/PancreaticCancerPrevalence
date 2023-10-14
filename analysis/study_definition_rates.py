@@ -57,13 +57,20 @@ study = StudyDefinition(
         }
     ),
 ### age at diagnosis
-    age_pa_ca=patients.age_as_of(
+    ageP_pr_ca=patients.age_as_of(
         "prevalence_date",
         return_expectations={
             "rate": "exponential_increase",
             "int": {"distribution": "population_ages"},
         },
     ),
+    # ageI_pr_ca=patients.age_as_of(
+    #     "diagnosis_date",
+    #     return_expectations={
+    #         "rate": "exponential_increase",
+    #         "int": {"distribution": "population_ages"},
+    #     },
+    # ),
 ### incidence, NEW diagnosed that month
     # incid=patients.with_these_clinical_events(
     #     prostate_cancer_codes,
@@ -96,8 +103,11 @@ study = StudyDefinition(
         """,
         diagnosis=patients.with_these_clinical_events(
             prostate_cancer_codes,
-            returning="binary_flag",
             find_first_match_in_period=True,
+            include_date_of_match=True,
+            include_month=True,
+            include_day=True,
+            returning="binary_flag",
             between=[
                 "first_day_of_month(index_date)",
                 "last_day_of_month(index_date)",
@@ -172,6 +182,25 @@ study = StudyDefinition(
             },
         },
     ),
+    region=patients.registered_practice_as_of(
+        "index_date",
+        returning="nuts1_region_name",
+        return_expectations={
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "North East": 0.1,
+                    "North West": 0.1,
+                    "Yorkshire and the Humber": 0.2,
+                    "East Midlands": 0.1,
+                    "West Midlands": 0.1,
+                    "East of England": 0.1,
+                    "London": 0.1,
+                    "South East": 0.2,
+                },
+            },
+        },
+    ),
 )
 
 measures = [
@@ -204,6 +233,13 @@ measures = [
         small_number_suppression=True,
     ),
     Measure(
+        id="prevalencebyRegion_rate",
+        numerator="prevalence",
+        denominator="population",
+        group_by="region",
+        small_number_suppression=True,
+    ),
+    Measure(
         id="incidence_rate",
         numerator="incidence",
         denominator="population",
@@ -229,6 +265,13 @@ measures = [
         numerator="incidence",
         denominator="population",
         group_by="age_group",
+        small_number_suppression=True,
+    ),
+    Measure(
+        id="incidencebyRegion_rate",
+        numerator="incidence",
+        denominator="population",
+        group_by="region",
         small_number_suppression=True,
     ),
     Measure(
