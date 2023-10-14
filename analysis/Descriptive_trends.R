@@ -1,7 +1,7 @@
 ### INFO
 # project: Project #: Prostate cancer prevalence
 # author: Agz Leman
-# March 2023
+# October 2023
 # Plots monthly rates 
 ###
 
@@ -67,7 +67,7 @@ p <- ggplot(data = Rates_rounded,aes(date, value2)) +
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
 p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(value2)+(sd(value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
-p <- p + labs(caption="OpenSafely-TPP March 2022")
+p <- p + labs(caption="OpenSafely-TPP October 2023")
 p <- p + theme(plot.caption = element_text(size=8))
 p <- p + theme(plot.title = element_text(size = 10))
 
@@ -78,9 +78,9 @@ ggsave(
 }
 
 for (i in c("measure_incidencebyAge_rate.csv","measure_incidencebyEthnicity_rate.csv",
-            "measure_incidencebyIMD_rate.csv",
+            "measure_incidencebyIMD_rate.csv","measure_incidencebyRegion_rate.csv",
             "measure_prevalencebyAge_rate.csv","measure_prevalencebyEthnicity_rate.csv",
-            "measure_prevalencebyIMD_rate.csv")){
+            "measure_prevalencebyIMD_rate.csv","measure_prevalencebyRegion_rate.csv")){
   
   Rates <- read_csv(here::here("output", "measures", i))
   Rates_rounded <- as.data.frame(Rates)
@@ -113,7 +113,7 @@ p <- ggplot(data = Rates_rounded,aes(date, value2, color = Rates_rounded[,1], lt
 p <- p + geom_vline(xintercept=as.Date(start, format="%Y-%m-%d"), size=0.3, colour="red")
 p <- p +  geom_text(aes(x=as.Date(start, format="%Y-%m-%d")+5, y=min(value2)+(sd(value2)*2)), 
                     color = "red",label="Start of\nrestrictions", angle = 90, size = 3)
-p <- p + labs(caption="OpenSafely-TPP March 2022")
+p <- p + labs(caption="OpenSafely-TPP October 2023")
 p <- p + theme(plot.caption = element_text(size=8))
 p <- p + theme(plot.title = element_text(size = 10))
 
