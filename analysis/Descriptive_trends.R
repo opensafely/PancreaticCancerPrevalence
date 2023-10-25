@@ -137,7 +137,7 @@ xx <- c("preva","ageP","sdP","inci","ageI","sdI",
         "inci15","ageI15","sdI15","inci16","ageI16","sdI16",
         "inci17","ageI17","sdI17","inci18","ageI18","sdI18",
         "inci19","ageI19","sdI19","inci20","ageI20","sdI20",
-        "inci21","ageI21","sdI21","inci22","ageI22","sdI22"
+        "inci21","ageI21","sdI21","inci22","ageI22","sdI22","inci23","ageI23","sdI23"
         )
 Table1[xx] <- NA
 Table1[1,"preva"] <- plyr::round_any(length(which(Input$prostate_ca==1)), 5, f = round)
@@ -228,6 +228,15 @@ Table1[1,"ageI22"] <- paste0(round(mean(Input3$age_pa_ca),n)," (p=",
 xl <- Input3$age_pa_ca; Table1[1,"sdI22"] <- paste0(round(sd(xl),n),
                                                     " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
                                                     round(t.test(xl)$conf.int[2],n),")"); rm(Input2)
+
+
+Input2 <- Input[Input$prostate_ca_date>= "2023-01-01" & Input$prostate_ca_date<= "2023-12-31",]
+Table1[1,"inci23"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
+Table1[1,"ageI23"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
+                             round(t.test(Input3$age_pa_ca,Input2$age_pa_ca)$p.value,3),")")
+xl <- Input2$age_pa_ca; Table1[1,"sdI23"] <- paste0(round(sd(xl),n),
+                                                    " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
+                                                    round(t.test(xl)$conf.int[2],n),")"); rm(Input3)
 
 
 Table1 <- t(Table1)
