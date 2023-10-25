@@ -232,8 +232,8 @@ xl <- Input3$age_pa_ca; Table1[1,"sdI22"] <- paste0(round(sd(xl),n),
 
 Input2 <- Input[Input$prostate_ca_date>= "2023-01-01" & Input$prostate_ca_date<= "2023-12-31",]
 Table1[1,"inci23"] <- plyr::round_any(length(which(Input2$prostate_ca==1)), 5, f = round)
-Table1[1,"ageI23"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
-                             round(t.test(Input2$age_pa_ca,Input3$age_pa_ca)$p.value,3),")")
+#Table1[1,"ageI23"] <- paste0(round(mean(Input2$age_pa_ca),n)," (p=",
+#                             round(t.test(Input2$age_pa_ca,Input3$age_pa_ca)$p.value,3),")")
 xl <- Input2$age_pa_ca; Table1[1,"sdI23"] <- paste0(round(sd(xl),n),
                                                     " (95CIs: ",round(t.test(xl)$conf.int[1],n)," to ",
                                                     round(t.test(xl)$conf.int[2],n),")"); #rm(Input3)
