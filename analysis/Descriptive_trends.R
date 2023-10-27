@@ -239,8 +239,8 @@ xl <- Input2$age_pa_ca; Table1[1,"sdI23"] <- paste0(round(sd(xl),n),
                                                     round(t.test(xl)$conf.int[2],n),")"); #rm(Input3)
 
 
-Table1[1,"m1"] <-dim(Input2)[1]
-Table1[1,"m2"] <-dim(Input2)[2]
+#Table1[1,"m1"] <-dim(Input2)[1]
+#Table1[1,"m2"] <-dim(Input2)[2]
 
 Table1 <- t(Table1)
 Table1 <- as.data.frame(Table1)
