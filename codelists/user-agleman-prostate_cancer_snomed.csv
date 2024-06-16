@@ -2,8 +2,40 @@ code,term
 1034421000000103,Discharge from secondary care prostate cancer service
 1034431000000101,Discharge from secondary care prostate cancer service 
 1098981000119101,Recurrent malignant neoplasm of prostate
+1149269009,Length of primary malignant neoplasm of prostate in resected prostate specimen
+1178981001,Presence of direct invasion by primary carcinoma of prostate to prostatic duct structure
+1178982008,Presence of direct invasion by primary malignant neoplasm of prostate to lymphatic vessel and/or small blood vessel
+1208457007,Small cell neuroendocrine carcinoma of prostate
+1237422007,Metastatic carcinoma to prostate
+1240353009,Metastatic squamous cell carcinoma to prostate
+1240359008,Metastatic small cell carcinoma to prostate
+1251485006,Metastatic adenocarcinoma to prostate
+1255597000,Presence of regression of primary malignant neoplasm of prostate after neoadjuvant antineoplastic therapy
+1259388006,Primary carcinoma of prostate
+1259598001,Primary small cell carcinoma of prostate
+1259666003,Primary acinar cell cystadenocarcinoma of prostate
+1259669005,Primary infiltrating duct carcinoma of prostate
+1259672003,Primary adenocarcinoma of prostate
+1259674002,Primary endometrioid carcinoma of prostate
+1259710009,Primary small cell neuroendocrine carcinoma of prostate
+1264500002,Metastatic infiltrating duct carcinoma to prostate
 126906006,Neoplasm of prostate
+1279782006,Histologic architectural pattern in primary malignant neoplasm of prostate
+1285516000,Presence of regression of primary malignant neoplasm of prostate after radiotherapy therapy
+1285517009,Presence of regression of primary malignant neoplasm of prostate after hormone therapy
+1525831000004108,Percentage of primary malignant neoplasm of prostate in resected prostate specimen
+1536001000004100,Anatomic location directly invaded by primary malignant neoplasm of prostate
 154531004,Carcinoma of prostate
+1546391000004105,Surgical margin involved by primary malignant neoplasm of prostate in prostatectomy specimen
+1546551000004107,Presence of primary malignant neoplasm of prostate at surgical margin in prostatectomy specimen
+1546581000004103,Gleason pattern of primary malignant neoplasm of prostate at surgical margin of prostatectomy specimen
+1546631000004100,Presence of direct invasion by primary malignant neoplasm of prostate to nerve
+1812481000004109,International Society of Urologic Pathology prostate cancer staging system
+1812491000004107,Histologic grade of primary malignant neoplasm of prostate by International Society of Urological Pathology technique
+1822721000004105,Volume of primary malignant neoplasm of prostate in resected prostate specimen
+1843201000004100,Gleason scoring system for prostatic cancer by largest nodule
+1853441000004104,Gleason scoring system for prostatic cancer by highest grade nodule
+1853451000004102,Gleason scoring system for prostatic cancer composite method
 254900004,Carcinoma of prostate
 254901000,Prostatic intraepithelial neoplasia
 278060005,Endometrioid carcinoma of prostate
@@ -12,6 +44,7 @@ code,term
 363448003,Malignant tumor of prostate
 369485004,Malignant tumor involving prostate by direct extension from bladder
 369777009,Gleason Score 8-10: Poorly differentiated
+385009003,Presence of direct invasion by primary malignant neoplasm of prostate to periprostatic tissue
 392993000,Gleason prostate grade 5-7 (medium)
 392994006,Gleason prostate grade 8-10 (high)
 393949009,Gleason prostate grade 5-7 (medium)
@@ -19,6 +52,7 @@ code,term
 394932008,Gleason prostate grade 5-7 (medium)
 394933003,Gleason prostate grade 8-10 (high)
 396198006,Small cell carcinoma of prostate
+396776008,Presence of primary malignant neoplasm of prostate at surgical margin of spermatic cord in excised specimen of prostate
 399068003,Malignant tumor of prostate
 399490008,Adenocarcinoma of prostate
 399590005,Squamous cell carcinoma of prostate
@@ -28,9 +62,11 @@ code,term
 448213004,Diffuse non-Hodgkin's lymphoma of prostate
 448217003,Follicular non-Hodgkin's lymphoma of prostate
 449318001,Non-Hodgkin's lymphoma of prostate
+706561000004103,Presence of direct invasion by primary malignant neoplasm of prostate to seminal vesicle
 712837004,Active surveillance of prostate cancer
 712849003,Primary malignant neoplasm of prostate metastatic to bone
 715412008,Familial malignant neoplasm of prostate
+716821000004105,Presence of direct invasion by primary malignant neoplasm of prostate to neck of male bladder
 720007002,Prostate cancer care review
 720008007,Prostate cancer care review done
 722081007,Obstructive nephropathy due to carcinoma of prostate
@@ -41,6 +77,8 @@ code,term
 81021006,Myoma of prostate
 822970008,Acinar cell cystadenocarcinoma of prostate
 823017009,Infiltrating duct carcinoma of prostate
+897202005,Gleason scoring system for malignant neoplasm of prostate
+911753521000004108,Histologic type of primary malignant neoplasm of prostate
 93974005,Primary malignant neoplasm of prostate
 95014000,Neoplasm of uncertain behavior of prostate
 962741000000108,Prostate cancer care review

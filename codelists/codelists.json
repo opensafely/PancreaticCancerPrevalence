@@ -2,15 +2,15 @@
   "files": {
     "opensafely-ethnicity-snomed-0removed.csv": {
       "id": "opensafely/ethnicity-snomed-0removed/2e641f61",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+      "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
       "downloaded_at": "2023-02-15 14:14:44.583052Z",
       "sha": "8b849b5b785d80306e488d0109640c8c1d2da01b"
     },
     "user-agleman-prostate_cancer_snomed.csv": {
-      "id": "user/agleman/prostate_cancer_snomed/051ac36b",
-      "url": "https://codelists.opensafely.org/codelist/user/agleman/prostate_cancer_snomed/051ac36b/",
-      "downloaded_at": "2022-10-20 11:16:21.454560Z",
-      "sha": "e34c03a84feae9b9748a4b88626cbfaa6374cb18"
+      "id": "user/agleman/prostate_cancer_snomed/1a9e7c88",
+      "url": "https://www.opencodelists.org/codelist/user/agleman/prostate_cancer_snomed/1a9e7c88/",
+      "downloaded_at": "2024-06-16 17:21:31.757980Z",
+      "sha": "59344b581cb18866cb52bd973874c7ce5cca6b02"
     }
   }
 }
